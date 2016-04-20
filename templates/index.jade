@@ -1,0 +1,24 @@
+- var manifest = htmlWebpackPlugin.files.manifest
+doctype
+<!--[if lt IE 7 ]><html lang="en" class="ie6" manifest=manifest><![endif]-->
+<!--[if IE 7 ]><html lang="en" class="ie7" manifest=manifest><![endif]-->
+<!--[if IE 8 ]><html lang="en" class="ie8" manifest=manifest><![endif]-->
+<!--[if IE 9 ]><html lang="en" class="ie9" manifest=manifest><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+html.no-js(lang="en", manifest=manifest)
+  <!--<![endif]-->
+  head
+    meta(charset="utf-8")
+    meta(http-equiv="x-ua-compatible", content="ie=edge")
+    title
+      | #{htmlWebpackPlugin.options.title} | #{htmlWebpackPlugin.options.subtitle}
+    meta(name="description", content=htmlWebpackPlugin.options.description)
+    meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+    each file, index in htmlWebpackPlugin.files.css
+      link(href=file, rel="stylesheet")
+  body
+    if (htmlWebpackPlugin.options.appMountId)
+      .container(id=htmlWebpackPlugin.options.appMountId)
+
+    each file, key in htmlWebpackPlugin.files.chunks
+      script(src=file.entry)

@@ -1,9 +1,14 @@
-require('./main.css');
+import './main.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './components/App';
 
-const component = <App message="Hello World" />;
-const mountPoint = document.getElementById('app');
+const stateMock = {
+  title: 'Hello World!',
+  message: 'This is an app',
+};
 
-ReactDOM.render(component, mountPoint);
+ReactDOM.render(
+  <App {...stateMock} />,
+  document.getElementById('app')
+);
