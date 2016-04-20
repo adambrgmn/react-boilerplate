@@ -2,6 +2,18 @@
   "parser": "babel-eslint",
   "extends": "airbnb",
   "plugins": [
-    "react"
-  ]
+    "react",
+    "mocha"
+  ],
+  "globals": {
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  },
+  "rules": {
+    "new-cap": ["error", { "capIsNewExceptions": ["Map", "List"] }]
+  }
 }
