@@ -6,15 +6,11 @@ import './styles.scss';
 export default class Button extends Component {
   constructor(props) {
     super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    // this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.classNames = classNames({
       button: true,
       disabled: this.props.disabled,
     });
-  }
-
-  handleClick = () => {
-    this.props.clickAction();
   }
 
   render() {
@@ -22,7 +18,7 @@ export default class Button extends Component {
       <button
         className={this.classNames}
         disabled={this.props.disabled}
-        onClick={this.handleClick}
+        onClick={() => this.props.clickAction()}
       >
         {this.props.buttonLabel}
       </button>
@@ -32,6 +28,6 @@ export default class Button extends Component {
 
 Button.propTypes = {
   disabled: React.PropTypes.bool,
-  buttonLabel: React.PropTypes.string.isRequired,
+  buttonLabel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   clickAction: React.PropTypes.func.isRequired,
 };
