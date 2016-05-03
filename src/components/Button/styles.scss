@@ -1,0 +1,12 @@
+.button {
+  background: tomato;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.button.disabled {
+  background: #AFB8FF;
+}

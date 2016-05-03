@@ -19,7 +19,6 @@ process.env.BABEL_ENV = TARGET;
 const common = {
   entry: {
     bundle: PATHS.app,
-    style: PATHS.style,
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -94,12 +93,10 @@ if (TARGET === 'start' || !TARGET) {
 if (TARGET === 'build' || TARGET === 'build:stats') {
   module.exports = merge(common, {
     entry: {
-      vendor: Object.keys(pkg.dependencies).filter(v => v !== ''),
+      vendor: Object.keys(pkg.dependencies),
     },
     output: {
-      path: PATHS.build,
-      filename: '[name].[hash].js',
-      chunkFilename: '[hash].js',
+      filename: '[name].[hash].min.js',
     },
     module: {
       loaders: [
@@ -110,17 +107,17 @@ if (TARGET === 'build' || TARGET === 'build:stats') {
       ],
     },
     plugins: [
+      new ExtractTextPlugin('style.[hash].min.css'),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
         'process.env.BROWSER': true,
         __DEV__: false,
       }),
-      new ExtractTextPlugin('[name].[hash].min.css'),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.[hash].min.js'),
+      new webpack.optimize.OccurrenceOrderPlugin(),
       new webpack.optimize.UglifyJsPlugin({
         compress: { warnings: false, screw_ie8: true },
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: ['vendor', 'manifest'],
       }),
       new CleanPlugin([PATHS.build]),
     ],
