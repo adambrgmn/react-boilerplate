@@ -20,6 +20,6 @@ export default class Home extends Component {
 }
 
 Home.propTypes = {
-  title: React.propTypes.string.isRequired,
-  message: React.propTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  message: React.PropTypes.string.isRequired,
 };

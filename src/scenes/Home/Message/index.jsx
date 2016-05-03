@@ -7,5 +7,5 @@ export default function Message({ message }) {
 }
 
 Message.propTypes = {
-  message: React.propTypes.string.isRequired,
+  message: React.PropTypes.string.isRequired,
 };

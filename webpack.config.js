@@ -48,7 +48,7 @@ const common = {
   },
   postcss: () => [autoprefixer],
   sassLoader: {
-    data: `$env '${TARGET}'`,
+    data: `$env: '${TARGET}';`,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -79,16 +79,15 @@ if (TARGET === 'start' || !TARGET) {
       loaders: [
         {
           test: /\.scss$/,
-          loaders: [
-            'style',
-            'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]',
-            'sass',
-          ],
+          loaders: ['style', 'css?sourceMap', 'postcss?sourceMap', 'sass?sourceMap'],
           include: PATHS.app,
         },
       ],
     },
-    plugins: [new webpack.HotModuleReplacementPlugin()],
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
+    ],
   });
 }
 
@@ -106,15 +105,11 @@ if (TARGET === 'build' || TARGET === 'build:stats') {
       loaders: [
         {
           test: /\.scss$/,
-          loader: ExtractTextPlugin.extract(
-            'style',
-            'css?modules&importLoaders=1&localIdentName=[name]---[local]---[hash:base64:5]!sass'
-          ),
+          loader: ExtractTextPlugin.extract('style', 'css!postcss!sass'),
         },
       ],
     },
     plugins: [
-      new CleanPlugin([PATHS.build]),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('production'),
         'process.env.BROWSER': true,
@@ -127,6 +122,7 @@ if (TARGET === 'build' || TARGET === 'build:stats') {
       new webpack.optimize.CommonsChunkPlugin({
         name: ['vendor', 'manifest'],
       }),
+      new CleanPlugin([PATHS.build]),
     ],
   });
 }

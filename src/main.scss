@@ -1,3 +1,8 @@
+*, *::before, *::after {
+  transition: background 0.5s;
+  box-sizing: border-box;
+}
+
 body {
   background: #eee;
 }
