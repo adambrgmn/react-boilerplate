@@ -4,6 +4,7 @@ const merge = require('webpack-merge');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
+const autoprefixer = require('autoprefixer');
 const pkg = require('./package.json');
 
 const TARGET = process.env.npm_lifecycle_event;
@@ -18,6 +19,7 @@ process.env.BABEL_ENV = TARGET;
 const common = {
   entry: {
     bundle: PATHS.app,
+    style: PATHS.style,
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
@@ -43,6 +45,10 @@ const common = {
         loader: 'jade',
       },
     ],
+  },
+  postcss: () => [autoprefixer],
+  sassLoader: {
+    data: `$env '${TARGET}'`,
   },
   plugins: [
     new HtmlWebpackPlugin({

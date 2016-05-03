@@ -1,14 +1,16 @@
 import './main.scss';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import { Map } from 'immutable';
 
-const stateMock = {
+import Home from './scenes/Home';
+
+const stateMock = Map({
   title: 'Hello World!',
   message: 'This is an app',
-};
+});
 
 ReactDOM.render(
-  <App {...stateMock} />,
+  <Home title={stateMock.get('title')} message={stateMock.get('message')} />,
   document.getElementById('app')
 );
