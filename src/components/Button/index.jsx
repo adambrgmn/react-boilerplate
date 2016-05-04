@@ -28,6 +28,6 @@ export default class Button extends Component {
 
 Button.propTypes = {
   disabled: React.PropTypes.bool,
-  buttonLabel: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  buttonLabel: React.PropTypes.string.isRequired,
   clickAction: React.PropTypes.func.isRequired,
 };

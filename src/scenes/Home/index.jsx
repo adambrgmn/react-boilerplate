@@ -5,7 +5,8 @@ import { appTitle, firebaseUrl } from '../../config';
 
 import Header from './Header';
 import Message from './Message';
-import Button from '../../components/Button';
+import Counter from './Counter';
+import Buttons from './Buttons';
 
 export default class Home extends Component {
   constructor(props) {
@@ -13,16 +14,15 @@ export default class Home extends Component {
 
     this.ref = new Firebase(firebaseUrl);
     this.countRef = this.ref.child('count');
-    this.ref.once('value', (snap) => {
+    this.ref.on('value', (snap) => {
       this.setState(() => {
-        return { count: snap.val().count };
+        const count = snap.val().count;
+        return { count };
       });
     });
 
     this.state = {
-      title: appTitle,
-      message: 'A small message',
-      count: 0,
+      count: '',
     };
   }
 
@@ -41,11 +41,10 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <Header title={this.state.title} />
-        <Message message={this.state.message} />
-        <Message message={`Counting: ${this.state.count}`} />
-        <Button buttonLabel="-" clickAction={() => this.handleClick('remove')} />
-        <Button buttonLabel="+" clickAction={() => this.handleClick('add')} />
+        <Header title={appTitle} />
+        <Message message="A small counter for the world to behold and take to their hearts." />
+        <Counter count={this.state.count} />
+        <Buttons clickAction={this.handleClick} />
       </div>
     );
   }

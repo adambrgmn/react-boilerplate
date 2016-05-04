@@ -55,7 +55,7 @@ const common = {
       appMountId: 'app',
       inject: false,
       title: 'React Boilerplate',
-      subtitle: 'With Immutable, Redux, Webpack and ES6',
+      subtitle: 'With Webpack and ES6',
       description: 'A ReactJS boilerplate',
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
