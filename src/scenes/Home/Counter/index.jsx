@@ -5,5 +5,5 @@ export default function Counter({ count }) {
 }
 
 Counter.propTypes = {
-  count: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  count: React.PropTypes.number.isRequired,
 };

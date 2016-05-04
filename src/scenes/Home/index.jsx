@@ -1,7 +1,8 @@
 import './styles.scss';
 import React, { Component } from 'react';
-import Firebase from 'firebase';
-import { appTitle, firebaseUrl } from '../../config';
+
+import { appTitle } from '../../config';
+import FirebaseConnection from '../../services/api';
 
 import Header from './Header';
 import Message from './Message';
@@ -11,31 +12,23 @@ import Buttons from './Buttons';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-
-    this.ref = new Firebase(firebaseUrl);
-    this.countRef = this.ref.child('count');
-    this.ref.on('value', (snap) => {
-      this.setState(() => {
-        const count = snap.val().count;
-        return { count };
-      });
-    });
-
+    this.base = new FirebaseConnection();
     this.state = {
-      count: '',
+      count: 0,
     };
   }
 
+  componentDidMount() {
+    this.base.syncState('home', this);
+  }
+
   handleClick = (method) => {
-    this.setState((prevState) => {
-      let count = prevState.count;
+    let count = this.state.count;
 
-      if (method === 'add') count++;
-      else count--;
+    if (method === 'add') count++;
+    else count --;
 
-      this.countRef.set(count);
-      return { count };
-    });
+    this.base.updateState('home', this, { count });
   }
 
   render() {
