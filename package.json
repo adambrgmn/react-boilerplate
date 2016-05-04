@@ -9,7 +9,7 @@
     "build:stats": "webpack --profile --json > stats.json",
     "test": "mocha --compilers js:babel-core/register --require ./test/setup.js 'src/**/*.specs.@(js|jsx)'",
     "test:watch": "npm run test -- --watch --watch-extensions jsx",
-    "storybook": "start-storybook -p 9001"
+    "storybook": "start-storybook -p 3001"
   },
   "repository": {
     "type": "git",
@@ -44,10 +44,10 @@
     "chai-immutable": "^1.5.4",
     "clean-webpack-plugin": "^0.1.8",
     "css-loader": "^0.23.1",
-    "eslint": "^2.8.0",
-    "eslint-config-airbnb": "^7.0.0",
-    "eslint-plugin-jsx-a11y": "^0.6.2",
-    "eslint-plugin-mocha": "^2.2.0",
+    "eslint": "^2.9.0",
+    "eslint-config-airbnb": "^8.0.0",
+    "eslint-plugin-import": "^1.6.1",
+    "eslint-plugin-jsx-a11y": "^1.0.4",
     "eslint-plugin-react": "^5.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-webpack-plugin": "^2.16.0",
@@ -69,6 +69,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "firebase": "^2.4.2",
     "immutable": "^3.8.1",
     "react": "^15.0.1",
     "react-addons-pure-render-mixin": "^15.0.1",

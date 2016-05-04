@@ -6,7 +6,7 @@ import './styles.scss';
 export default class Button extends Component {
   constructor(props) {
     super(props);
-    // this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
     this.classNames = classNames({
       button: true,
       disabled: this.props.disabled,

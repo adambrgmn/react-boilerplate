@@ -1,6 +1,7 @@
+import './styles.scss';
 import React, { Component } from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
-import { Map } from 'immutable';
+import Firebase from 'firebase';
+import { appTitle, firebaseUrl } from '../../config';
 
 import Header from './Header';
 import Message from './Message';
@@ -9,27 +10,42 @@ import Button from '../../components/Button';
 export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+
+    this.ref = new Firebase(firebaseUrl);
+    this.countRef = this.ref.child('count');
+    this.ref.once('value', (snap) => {
+      this.setState(() => {
+        return { count: snap.val().count };
+      });
+    });
+
     this.state = {
-      data: Map({
-        title: 'Hello world',
-        message: 'Welcome to this small app. It doesn\'t do much, but what it does it does good!',
-        count: 0,
-      }),
+      title: appTitle,
+      message: 'A small message',
+      count: 0,
     };
   }
 
-  handleClick = () => {
-    console.log('Hello');
-    this.state.data = this.state.data.update('count', n => n + 1);
+  handleClick = (method) => {
+    this.setState((prevState) => {
+      let count = prevState.count;
+
+      if (method === 'add') count++;
+      else count--;
+
+      this.countRef.set(count);
+      return { count };
+    });
   }
 
   render() {
     return (
       <div>
-        <Header title={this.state.data.get('title')} />
-        <Message message={this.state.data.get('message')} />
-        <Button buttonLabel={this.state.data.get('count')} clickAction={this.handleClick} />
+        <Header title={this.state.title} />
+        <Message message={this.state.message} />
+        <Message message={`Counting: ${this.state.count}`} />
+        <Button buttonLabel="-" clickAction={() => this.handleClick('remove')} />
+        <Button buttonLabel="+" clickAction={() => this.handleClick('add')} />
       </div>
     );
   }
